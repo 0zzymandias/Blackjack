@@ -1,4 +1,5 @@
-##Quick Blackjack exercise.
+##Blackjack exercise.
+
 import random
 x = 1
 CardNum = {2, 3, 4, 5, 6, 7, 9, 'Jack', 'King', 'Queen', 'Ace'}
@@ -28,3 +29,4 @@ def DrawPlayerCards():
 
 for x in productiondeck:
     print(x)
+
