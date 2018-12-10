@@ -27,7 +27,5 @@ playerhand = Hit()
 playerhand = Hit()
 print("")
 
-print(originaldeck)
-
 
 print('=')
