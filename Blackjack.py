@@ -7,25 +7,48 @@ CardSuit = {'Clubs','Hearts', 'Diamonds','Spades'}
 #Reference deck
 originaldeck = []
 
+#Zeroed hand values
+playerhand = []
+dealerhand = []
+playerhandvalue = 0
+dealerhandvalue = 0
+
+
 for x in CardNum:
     for y in CardSuit:
         originaldeck.append(str(x) + ' of ' + str(y))
 
-def Hit():
+def PlayerHit():
         hit = (random.choice(originaldeck))
         originaldeck.remove(hit)
+        playerhand.append(hit)
         print(hit)
-        return hit
+def DealerHit():
+        hit = (random.choice(originaldeck))
+        originaldeck.remove(hit)
+        dealerhand.append(hit)
+        print(hit)
+
 print('')
 print('Dealer has:')
-dealerhand = Hit()
+DealerHit()
 print("and a hidden card")
 print('')
 
 print("You have:")
-playerhand = Hit()
-playerhand = Hit()
+PlayerHit()
+PlayerHit()
 print("")
 
-
 print('=')
+
+
+
+def HandValueCounter(hand, handvaluecounter):
+        if ('Ace' in hand) and (handvaluecounter < 11):
+                handvaluecounter+=11
+        elif ('Ace' in hand) and (handvaluecounter >= 11):
+                        handvaluecounter+=1
+        print(handvaluecounter)
+
+HandValueCounter(playerhand, playerhandvalue)
