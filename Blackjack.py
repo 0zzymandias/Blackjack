@@ -21,57 +21,56 @@ for x in CardNum:
     for y in CardSuit:
         originaldeck.append(str(x) + ' of ' + str(y))
 
-
+#################################################
+#Find all cards and assign value to the hand, assuming aces can go both high and low.
+#Because strings are immutable in Python, we have to "punch" used cards from the original reference hand.
+#Else, we will count only the highest card twice.
+def HandValueCounter(drawncard, handvalue_numeric):
+        if 'Ace' in drawncard and handvalue_numeric < 11:
+                return 11
+        if 'Ace' in drawncard and handvalue_numeric >= 11:
+                return 1
+        if 'Queen' in drawncard:
+                return 10
+        if 'King' in drawncard:
+                return 10
+        if 'Jack' in drawncard:
+                return 10
+        if '10' in drawncard:
+                return 10
+        if '9' in drawncard:
+                return 9
+        if '8' in drawncard:
+                return 8
+        if '7' in drawncard:
+                return 7
+        if '6' in drawncard:
+                return 6
+        if '5' in drawncard:
+                return 5
+        if '4' in drawncard:
+                return 4
+        if '3' in drawncard:
+                return 3
+        if '2' in drawncard:
+                return 2
 
 #Player hits to their own lists.
 def PlayerHit():
         hit = (random.choice(originaldeck))
         originaldeck.remove(hit)
+        global playerhandvalue
+        playerhandvalue += HandValueCounter(hit, playerhandvalue)
         playerhand.append(hit)
         print(hit)
 #Dealer hits to their own lists.
 def DealerHit():
         hit = (random.choice(originaldeck))
         originaldeck.remove(hit)
+        global dealerhandvalue
+        dealerhandvalue += HandValueCounter(hit, dealerhandvalue)
         dealerhand.append(hit)
         print(hit)
-
-#Find all cards and assign value to the hand, assuming aces can go both high and low.
-#Stringvalues 
-def HandValueCounter(stringvalues, handvalue_numeric):
-        if 'Ace' in stringvalues and handvalue_numeric < 11:
-                stringvalues.replace('Ace','Counted',1)
-                return 11
-        if 'Ace' in stringvalues and handvalue_numeric >= 11:
-                return 1
-        if 'Queen' in stringvalues:
-                return 10
-        if 'King' in stringvalues:
-                return 10
-        if 'Jack' in stringvalues:
-                return 10
-        if '10' in stringvalues:
-                return 10
-        if '9' in stringvalues:
-                return 9
-        if '8' in stringvalues:
-                return 8
-        if '7' in stringvalues:
-                return 7
-        if '6' in stringvalues:
-                return 6
-        if '5' in stringvalues:
-                return 5
-        if '4' in stringvalues:
-                return 4
-        if '3' in stringvalues:
-                return 3
-        if '2' in stringvalues:
-                return 2
-
-
-#Because strings are immutable in Python, we have to "punch" used cards from the original reference hand.
-#Else, we will count only the highest card twice.
 
 
 
@@ -80,7 +79,10 @@ print('')
 print('Dealer has:')
 DealerHit()
 print("and a hidden card")
+print('Dealer count:' + str(dealerhandvalue+10))
+print('(Always assume the dealer is hiding a 10)')
 print('')
+
 
 print("You have:")
 PlayerHit()
@@ -93,9 +95,10 @@ print('=')
 string_dealerhand = str(dealerhand)
 string_playerhand = str(playerhand)
 
-
-playerhandvalue += int(HandValueCounter(string_playerhand, playerhandvalue))
-playerhandvalue += int(HandValueCounter(string_playerhand, playerhandvalue))
+for x in playerhand:
+        if 'Ace of Spades' in string_playerhand:
+                string_playerhand.replace('Ace','Counted',1)
+print(string_playerhand)
 
 print('Playerhand')
 print(playerhand)
