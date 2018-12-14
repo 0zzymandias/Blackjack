@@ -15,6 +15,9 @@ dealerhand = []
 playerhandvalue = 0
 dealerhandvalue = 0
 
+playersplitchecker1 = 0
+playersplitchecker2 = 0
+
 
 #Add all card combinations to a list
 for x in CardNum:
@@ -56,11 +59,13 @@ def HandValueCounter(drawncard, handvalue_numeric):
                 return 2
 
 #Player hits to their own lists.
-def PlayerHit():
+def PlayerHit(splitchecker):
         hit = (random.choice(originaldeck))
         originaldeck.remove(hit)
         global playerhandvalue
         playerhandvalue += HandValueCounter(hit, playerhandvalue)
+        splitchecker = 0
+        splitchecker += int(HandValueCounter(hit, playerhandvalue))
         playerhand.append(hit)
         print(hit)
 #Dealer hits to their own lists.
@@ -79,30 +84,23 @@ print('')
 print('Dealer has:')
 DealerHit()
 print("and a hidden card")
-print('Dealer count:' + str(dealerhandvalue+10))
-print('(Always assume the dealer is hiding a 10)')
+print('')
+print('Dealer count estimate: ' + str(dealerhandvalue+10)) #Add a ten to the dealer count estimate.
+print('(Always assume the dealer is hiding a 10.)') 
 print('')
 
 
 print("You have:")
-PlayerHit()
-PlayerHit()
-print("")
-
-print('=')
-
-#The post-hit dealer and player hands, in string format.
-string_dealerhand = str(dealerhand)
-string_playerhand = str(playerhand)
-
-for x in playerhand:
-        if 'Ace of Spades' in string_playerhand:
-                string_playerhand.replace('Ace','Counted',1)
-print(string_playerhand)
-
-print('Playerhand')
-print(playerhand)
-print('Playerhand -> To string')
-print(string_playerhand)
-print('Player hand numerical value')
+PlayerHit(playersplitchecker1)
+PlayerHit(playersplitchecker2)
+print('Total:')
 print(playerhandvalue)
+
+
+print(playersplitchecker1)
+print(playersplitchecker2)
+if int(playersplitchecker1) == int(playersplitchecker2):
+        print('You can split.')
+
+print('Which action will you take?')
+print('Hit (1), Stay (2), Split (3), or Double?(4)')
