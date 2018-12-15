@@ -4,7 +4,6 @@ import random
 
 playerbalance = 500
 bet = 25
-
 #Card combinations in their own dictionaries
 CardNum = {2, 3, 4, 5, 6, 7, 9, 10, 'Jack', 'King', 'Queen', 'Ace'}
 CardSuit = {'Clubs','Hearts', 'Diamonds','Spades'}
@@ -112,10 +111,7 @@ print('')
 #Determine first-card events.
 evenmoneyevent = 0 
 answeredcorrectly = 'false'
-#if int(playerhandvalue) == 21 and (int(dealerhandvalue+10) == 21 or int(dealerhandvalue+10) == 20):
-
-
-if 1 == 1:
+if int(playerhandvalue) == 21 and (int(dealerhandvalue+10) == 21 or int(dealerhandvalue+10) == 20):
         evenmoneyevent = 1
         print('Even money? (Yes or no)')
         x = input()
@@ -135,17 +131,18 @@ if 1 == 1:
                 evenmoneyevent = 0
                 
 print('End!')
-#if int(playerhandvalue) == 21 and int(evenmoneyevent) == 0 and int(dealerhandvalue) != 21:
- #       print('Blackjack!')
+
+if int(playerhandvalue) == 21 and int(evenmoneyevent) == 0 and int(dealerhandvalue) != 21:
+       print('Blackjack!')
         
-#if evenmoneyevent == 0 and (int(dealerhandvalue+10) == 21 or int(dealerhandvalue+10) == 20):
- #       print('Insurance?')
+if evenmoneyevent == 0 and (int(dealerhandvalue+10) == 21 or int(dealerhandvalue+10) == 20):
+       print('Insurance?')
 
 
 
 #while resolved = False
- #       if int(playersplitchecker1) == int(playersplitchecker2):
-  #              print('You can split.')
+if int(playersplitchecker1) == int(playersplitchecker2):
+        print('You can split.')
 
-   #     print('Which action will you take?')
-    #    print('Hit (1), Stay (2), Split (3), or Double?(4)')
+print('Which action will you take?')
+print('Hit (1), Stay (2), Split (3), or Double?(4)')
