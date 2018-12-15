@@ -2,6 +2,9 @@
 
 import random
 
+playerbalance = 500
+bet = 25
+
 #Card combinations in their own dictionaries
 CardNum = {2, 3, 4, 5, 6, 7, 9, 10, 'Jack', 'King', 'Queen', 'Ace'}
 CardSuit = {'Clubs','Hearts', 'Diamonds','Spades'}
@@ -105,26 +108,38 @@ print(playerhandvalue)
 print('')
 
 
+
 #Determine first-card events.
 evenmoneyevent = 0 
-if int(playerhandvalue) == 21 and (int(dealerhandvalue+10) == 21 or int(dealerhandvalue+10) == 20):
-        print('Even money?')
-        evenmoneyevent = 1
-        x = (input('Yes, or no?'))
-        while x.lower != 'yes' or 'no':
-                x = input()
-        while (choice != "nav"):
-    print("--[Tutorial: Say 'Nav'. Case does not matter.]--")
-    choice = input()
-    choice = choice.lower()
-if choice == "nav":
-    print("--[Completed Mission: Nav Tutorial]--")
+answeredcorrectly = 'false'
+#if int(playerhandvalue) == 21 and (int(dealerhandvalue+10) == 21 or int(dealerhandvalue+10) == 20):
 
-if int(playerhandvalue) == 21 and int(evenmoneyevent) == 0 and int(dealerhandvalue) != 21:
-        print('Blackjack!')
+
+if 1 == 1:
+        evenmoneyevent = 1
+        print('Even money? (Yes or no)')
+        x = input()
+        x = x.lower()
+        if (x == 'no') or (x == 'yes'):
+                answeredcorrectly='true'
+        while (answeredcorrectly == 'false'):
+                print('Even money? (Yes or no)')
+                x = input()
+                x = x.lower()
+                if (x == 'no') or (x == 'yes'):
+                        answeredcorrectly='true'
+        if x == 'yes':
+                playerbalance += bet
+                print('+'+ str(bet))
+        if x == 'no':
+                evenmoneyevent = 0
+                
+print('End!')
+#if int(playerhandvalue) == 21 and int(evenmoneyevent) == 0 and int(dealerhandvalue) != 21:
+ #       print('Blackjack!')
         
-if evenmoneyevent == 0 and (int(dealerhandvalue+10) == 21 or int(dealerhandvalue+10) == 20):
-        print('Insurance?')
+#if evenmoneyevent == 0 and (int(dealerhandvalue+10) == 21 or int(dealerhandvalue+10) == 20):
+ #       print('Insurance?')
 
 
 
