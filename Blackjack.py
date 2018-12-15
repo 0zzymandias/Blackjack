@@ -18,6 +18,7 @@ dealerhandvalue = 0
 playersplitchecker1 = 0
 playersplitchecker2 = 0
 
+resolved = 'false'
 
 #Add all card combinations to a list
 for x in CardNum:
@@ -62,12 +63,18 @@ def HandValueCounter(drawncard, handvalue_numeric):
 def PlayerHit(splitchecker):
         hit = (random.choice(originaldeck))
         originaldeck.remove(hit)
+        
+        #Call the player hand from above. Add the actual value of the card to it.
         global playerhandvalue
         playerhandvalue += HandValueCounter(hit, playerhandvalue)
-        splitchecker = 0
-        splitchecker += int(HandValueCounter(hit, playerhandvalue))
+        
         playerhand.append(hit)
+
+ 
+        #Log the card value to the split container. If both containers equal each other, the player can split cards.
+        splitchecker = int(HandValueCounter(hit, playerhandvalue))
         print(hit)
+        return splitchecker
 #Dealer hits to their own lists.
 def DealerHit():
         hit = (random.choice(originaldeck))
@@ -91,16 +98,39 @@ print('')
 
 
 print("You have:")
-PlayerHit(playersplitchecker1)
-PlayerHit(playersplitchecker2)
+playersplitchecker1 = (PlayerHit(playersplitchecker1))
+playersplitchecker2 = (PlayerHit(playersplitchecker2))
 print('Total:')
 print(playerhandvalue)
+print('')
 
 
-print(playersplitchecker1)
-print(playersplitchecker2)
-if int(playersplitchecker1) == int(playersplitchecker2):
-        print('You can split.')
+#Determine first-card events.
+evenmoneyevent = 0 
+if int(playerhandvalue) == 21 and (int(dealerhandvalue+10) == 21 or int(dealerhandvalue+10) == 20):
+        print('Even money?')
+        evenmoneyevent = 1
+        x = (input('Yes, or no?'))
+        while x.lower != 'yes' or 'no':
+                x = input()
+        while (choice != "nav"):
+    print("--[Tutorial: Say 'Nav'. Case does not matter.]--")
+    choice = input()
+    choice = choice.lower()
+if choice == "nav":
+    print("--[Completed Mission: Nav Tutorial]--")
 
-print('Which action will you take?')
-print('Hit (1), Stay (2), Split (3), or Double?(4)')
+if int(playerhandvalue) == 21 and int(evenmoneyevent) == 0 and int(dealerhandvalue) != 21:
+        print('Blackjack!')
+        
+if evenmoneyevent == 0 and (int(dealerhandvalue+10) == 21 or int(dealerhandvalue+10) == 20):
+        print('Insurance?')
+
+
+
+#while resolved = False
+ #       if int(playersplitchecker1) == int(playersplitchecker2):
+  #              print('You can split.')
+
+   #     print('Which action will you take?')
+    #    print('Hit (1), Stay (2), Split (3), or Double?(4)')
