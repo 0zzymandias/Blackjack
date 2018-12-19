@@ -101,6 +101,18 @@ def DealerHit():
         dealerhand.append(hit)
         print(hit)
 
+#Check if the hand is soft; 
+def AceCheck(currenthand):
+        global handace
+        x = str(currenthand)
+        if 'Ace' in x:
+                handace = 'Soft'
+        if 'Ace' not in x:
+                handace = 'Hard'
+
+hand = 'unresolved'
+handace = 'Undefined' 
+
 #Actual game thus far
 print('')
 print('Dealer has:')
@@ -117,6 +129,12 @@ playersplitchecker1 = (PlayerHit(playersplitchecker1))
 playersplitchecker2 = (PlayerHit(playersplitchecker2))
 print('Total:')
 print(playerhandvalue)
+
+AceCheck(playerhand)
+
+#Determine first-card events.
+evenmoneyevent = 0 
+answeredcorrectly = 'false'
 
 answeredcorrectly = 'false'
 #Before any action is taken, prompt even-money event in the case of dual-blackjacks.
@@ -149,65 +167,6 @@ print('')
 
 #Current issues with Soft 21 busting. (K+A)
 
-hand = 'unresolved'
-handace = ''
-
-if 'Ace' in playerhand:
-        handace = 'Soft'
-
-while hand != 'resolved':
-        print('')
-        print('What will you do?')
-        print('Current hand value:')
-        print(str(handace) + ' ' + str(playerhandvalue))
-        print('Hit (1), Stay (2), Split (3), Double (4)')
-        action = input('#')
-        
-        #Hit
-        if action == '1':
-                #Draw card
-                PlayerHit2()
-                #Player busts on hard card
-                if playerhandvalue > 21 and handace == 'Hard':
-                        print(playerhandvalue)
-                        print('Busted!')
-                        hand = 'resolved'
-                #Player has actions remaining
-                if playerhandvalue < 21:
-                        print('What will you do?')
-                #Player uses up soft ace
-                if playerhandvalue > 21 and handace == 'Soft':
-                        playerhandvalue = playerhandvalue - 10
-                        handace = 'Hard'
-        #Stand
-        #if action = '2':
-        #Split
-        #if action = '3':
-        #Double
-        #if action = '4':
-
-
-#Note to self: you may want to create card slots for each hand. 6 card Charlie is statistically improbable.
-
-action = input('#')
-
-while x == x:
-        print('Your hand: '+ str(playerhandvalue))
-        print('Dealers hand: '+ str(dealerhandvalue))
-        print('What will you do?')
-        print('Hit (1), Stay (2), Split (3), Double (4)')
-        action = input('#')
-        if action == '1':
-                PlayerHit(playersplitchecker1)
-                print(playerhandvalue)
-                
-#Determine first-card events.
-evenmoneyevent = 0 
-answeredcorrectly = 'false'
-
-                
-print('End!')
-
 if int(playerhandvalue) == 21 and int(evenmoneyevent) == 0 and int(dealerhandvalue) != 21:
        print('Blackjack!')
         
@@ -221,3 +180,73 @@ if int(playersplitchecker1) == int(playersplitchecker2):
         print('You can split.')
 
 
+while hand != 'resolved':
+        print('')
+        print('Current hand value:')
+        print(str(handace) + ' ' + str(playerhandvalue))
+        print('Hit (1), Stay (2), Split (3), Double (4)')
+        action = input('Choice: #')
+        
+        #Hit
+        if action == '1':
+                #Draw card
+                PlayerHit2()
+                #Player busts on hard card
+                if playerhandvalue > 21 and handace == 'Hard':
+                        print(playerhandvalue)
+                        print('======')
+                        print('Busted!')
+                        print('======')
+                        print('Dealer had a total of...')
+                        print(dealerhandvalue)
+                        hand = 'resolved'
+                #Player has actions remaining
+                if playerhandvalue < 21:
+                        print('What will you do?')
+                #Player uses up soft ace
+                if playerhandvalue > 21 and handace == 'Soft':
+                        playerhandvalue = playerhandvalue - 10
+                        handace = 'Hard'
+        #Stand
+        if action == '2':
+                print('')
+                print('Dealer flips over their card...')
+                time.sleep(0.5)
+                DealerHit()
+                print('Dealer has '+str(dealerhandvalue)+'.')
+                while dealerhandvalue < 17:
+                        DealerHit()
+                        print('Dealer flips over their card...')
+                        time.sleep(0.5)
+                        print('Dealer has '+str(dealerhandvalue)+'.')
+                if dealerhandvalue > playerhandvalue and dealerhandvalue <=21:
+                        print('Dealer has won with '+str(dealerhandvalue)+'.')
+                        hand = 'resolved'
+                if dealerhandvalue > 21:
+                        print('Dealer has busted with '+str(dealerhandvalue)+'!')
+                        hand = 'resolved'
+                if playerhandvalue > dealerhandvalue:
+                        print('Player has won with '+str(playerhandvalue)+'!')
+                        hand = 'resolved'
+                if dealerhandvalue == playerhandvalue:
+                        print('Push!')
+                        hand = 'resolved'
+        #Split
+        #if action = '3':
+        #Double
+        #if action = '4':
+
+
+#Note to self: you may want to create card slots for each hand. 6 card Charlie is statistically improbable.
+
+action = input('Done with hand!')
+                
+
+
+                
+
+
+
+
+
+print('End!')
