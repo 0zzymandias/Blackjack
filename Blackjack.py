@@ -6,8 +6,8 @@ import time
 playerbalance = 500
 bet = 25
 #Card combinations in their own dictionaries
-#
-CardNum = {2, 3, 4, 5, 6, 7, 9, 10, 'Jack', 'King', 'Queen', 'Ace'}
+#2, 3, 4, 5, 6, 7, 9, 10, 
+CardNum = {'Jack', 'King', 'Queen', 'Ace'}
 CardSuit = {'Clubs','Hearts', 'Diamonds','Spades'}
 
 #Reference deck, zeroed
@@ -100,7 +100,7 @@ def DealerHit():
         dealerhandvalue += HandValueCounter(hit, dealerhandvalue)
         dealerhand.append(hit)
         print(hit)
-
+        print(dealerhandvalue)
 #Check if the hand is soft; 
 def AceCheck(currenthand):
         global handace
@@ -162,13 +162,16 @@ if int(playerhandvalue) == 21 and (int(dealerhandvalue+10) == 21 or int(dealerha
                 DealerHit()
         if dealerhandvalue == playerhandvalue:
                 print('The game ends in a push.')
+                hand = 'resolved'
 print('')
 
 
 #Current issues with Soft 21 busting. (K+A)
 
 if int(playerhandvalue) == 21 and int(evenmoneyevent) == 0 and int(dealerhandvalue) != 21:
-       print('Blackjack!')
+       print('You have Blackjack!')
+       print('Balance +'+str(bet))
+       hand = 'resolved'
         
 if evenmoneyevent == 0 and (int(dealerhandvalue+10) == 21 or int(dealerhandvalue+10) == 20):
        print('Insurance?')
@@ -197,7 +200,8 @@ while hand != 'resolved':
                         print('======')
                         print('Busted!')
                         print('======')
-                        print('Dealer had a total of...')
+                        print('Dealer was hiding and had a total of...')
+                        DealerHit()
                         print(dealerhandvalue)
                         hand = 'resolved'
                 #Player has actions remaining
@@ -219,14 +223,14 @@ while hand != 'resolved':
                         print('Dealer flips over their card...')
                         time.sleep(0.5)
                         print('Dealer has '+str(dealerhandvalue)+'.')
-                if dealerhandvalue > playerhandvalue and dealerhandvalue <=21:
-                        print('Dealer has won with '+str(dealerhandvalue)+'.')
-                        hand = 'resolved'
                 if dealerhandvalue > 21:
                         print('Dealer has busted with '+str(dealerhandvalue)+'!')
                         hand = 'resolved'
                 if playerhandvalue > dealerhandvalue:
                         print('Player has won with '+str(playerhandvalue)+'!')
+                        hand = 'resolved'
+                if dealerhandvalue > playerhandvalue and dealerhandvalue <22:
+                        print('Dealer has won with '+str(dealerhandvalue)+'.')
                         hand = 'resolved'
                 if dealerhandvalue == playerhandvalue:
                         print('Push!')
